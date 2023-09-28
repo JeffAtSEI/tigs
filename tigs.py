@@ -272,7 +272,7 @@ class HomeStats:
             else:
                 self.eff_both += resource
 
-        self.planet_systems += 1 if (tile['resource']+tile['influence']) > 0 else 0
+        self.planet_systems += (tile['resource']+tile['influence']) > 0
         self.worms += (tile['worm'] != None)
         self.anomalies += (tile['anomaly'] != None)
 
@@ -289,8 +289,16 @@ class HomeStats:
  
         v = [self.eff_resource+self.eff_both,self.resource,self.eff_influence,self.resource,len(self.skips),self.worms]
 
+        #
+        # Base score is dot product of weight vector and value vector.  Currently the effective "both"
+        # class is folded into resource for now.
+        #
         _score = sum(elem[0] * elem[1] for elem in zip(w,v))
 
+        #
+        # Impose large penalties for being outside min/max number of systems /w planets
+        # next to home system.
+        #
         if self.hop == 1:
             if self.planet_systems > WEIGHTS.SCORE_MAX_HOP1_PLANET_SYS:
                 _score += -100
@@ -392,6 +400,9 @@ class Home:
         self.stats2c.print()
         self.stats2t.print()
 
+        #
+        # Total effective counts
+        #
         ter = self.stats1.eff_resource+self.stats2u.eff_resource + 0.5*self.stats2c.eff_resource
         tei = self.stats1.eff_influence+self.stats2u.eff_influence + 0.5*self.stats2c.eff_influence
         teb = self.stats1.eff_both+self.stats2u.eff_both + 0.5*self.stats2c.eff_both
