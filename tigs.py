@@ -11,14 +11,20 @@ import json
 #
 # Example Usages:
 #
+#   * Pick factions for players
+#         python tigs.py --factions olga helga yetzel elmo
+#
+#   * Pick positions for players
+#         python tigs.py --positions olga helga yetzel elmo
+#
 #   * Show statistics on a board:
 #         python tigs.py --board 18,31,61,65,25,43,66,38,69,62,28,72,68,75,35,33,22,64,78,29,42,40,71,0,44,26,77,0,37,63,39,36,0,20,79,34,0
 #
 #   * Generate an unoptimized random 6-player board:
-#         python tilepick.py --players 6
+#         python tigs.py --players 6
 #
 #   * Generate an optimized 6-player board:
-#         python tilepick.py --players 6 --optimize
+#         python tigs.py --players 6 --optimize
 #
 #   * Additional options for optimization:
 #         --shuffle 3		Shuffle 3 tiles at a time each optimization step
